@@ -1,19 +1,32 @@
-# mlir-sys
+<div align="center">
+<h1 align="center">rum</h1>
+<br />
+<img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" /><br>
+<br>
+rust bindings and wrapper layer for mlir
+</div>
 
-[![GitHub Action](https://img.shields.io/github/workflow/status/femtomc/mlir-sys/test?style=flat-square)](https://github.com/femtomc/mlir-sys/actions)
-[![Crate](https://img.shields.io/crates/v/mlir-sys.svg?style=flat-square)](https://crates.io/crates/mlir-sys)
-[![License](https://img.shields.io/github/license/femtomc/mlir-sys.svg?style=flat-square)](LICENSE)
+***
 
-Rust bindings to [the MLIR C API](https://mlir.llvm.org/docs/CAPI/).
-
-## Install
-
-```sh
-cargo add mlir-sys
+### Installation
+```
+git clone git@github.com:codes1gn/llvm-project.git 
+git checkout llvmorg-15.0.1 
+./build_llvm_mlir.sh 
+./build_mlir_bind.sh
 ```
 
-This crate searches an `llvm-config` command on build and uses it to determine build configurations related to LLVM and MLIR. You can also use a `MLIR_SYS_150_PREFIX` environment variable to specify a custom directory of LLVM installation.
+### Usage
+```
+write use command here
+```
 
-## License
+### Contributing
 
-[MIT](LICENSE)
+### License
+This project is licensed under the MIT license
+### Show your support
+Leave a ⭐ if you like this project
+
+***
+Readme made with 💖 using [README Generator by Dhravya Shah](https://github.com/Dhravya/readme-generator)
