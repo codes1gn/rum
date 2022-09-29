@@ -9,6 +9,7 @@ echo "top dir = "$top_dir_realpath
 
 # create mlir build path
 mkdir -p ${top_dir_realpath}/build
+mkdir -p ${top_dir_realpath}/mlir_install_cache
 cd ${top_dir_realpath}/build
 
 # try to fix linker issue
@@ -23,12 +24,12 @@ cmake -G Ninja \
     -DLLVM_TARGETS_TO_BUILD="X86;NVPTX" \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_ASSERTIONS=ON \
-    -DCMAKE_C_COMPILER=clang-11 \
-    -DCMAKE_CXX_COMPILER=clang++-11 \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
     -DLLVM_INSTALL_UTILS=ON \
-    -DCMAKE_INSTALL_PREFIX=${top_dir_realpath}/build \
-    # -DLLVM_BUILD_LLVM_DYLIB=ON \
-    # -DLLVM_LINK_LLVM_DYLIB=ON
+    -DCMAKE_INSTALL_PREFIX=${top_dir_realpath}/mlir_install_cache \
+    -DLLVM_BUILD_LLVM_DYLIB=ON \
+    -DLLVM_LINK_LLVM_DYLIB=ON \
     # -DLLVM_USE_LINKER=lld
     # -DLLVM_ENABLE_LLD=ON \
 # build with gcc
@@ -39,3 +40,6 @@ cmake --build . --target check-mlir
 cmake --build . --target install
 
 cd -
+
+
+MLIR_SYS_150_PREFIX=mlir_install_cache/ cargo build

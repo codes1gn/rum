@@ -1,12 +1,11 @@
 [package]
-name = "mlir-sys"
-version = "0.1.4"
-authors = ["McCoy R. Becker, Yota Toyama"]
+name = "rum"
+version = "0.1.0"
+authors = ["Albert Shi"]
 edition = "2021"
-description = "Rust bindings to the MLIR C API."
-repository = "https://github.com/femtomc/mlir-sys"
+description = "Rust binding Layer on MLIR C API."
+repository = "https://github.com/codes1gn/rum"
 readme = "README.md"
-links = "MLIR"
 license-file = "LICENSE"
 
 [build-dependencies]

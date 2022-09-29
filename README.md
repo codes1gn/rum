@@ -12,13 +12,24 @@ rust bindings and wrapper layer for mlir
 ```
 git clone git@github.com:codes1gn/llvm-project.git 
 git checkout llvmorg-15.0.1 
-./build_llvm_mlir.sh 
-./build_mlir_bind.sh
+./build_mlir.sh
+./build_rum_bindings.sh
+```
+or build from docker
+```
+docker pull kernelci/clang-15
+docker run -itd -v <local dir>:<target dir> -p <local port>:<target port> --network host --name <container-name> <image-name>
+docker exec -it <container-name> /bin/bash
+
+apt install build-essential,cmake,liblapack-dev,libopenblas-dev,curl,wget,ninja-build
+
+./build_mlir.sh
+./build_rum_bindings.sh
 ```
 
 ### Usage
 ```
-write use command here
+
 ```
 
 ### Contributing
