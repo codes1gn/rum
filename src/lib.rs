@@ -2,11 +2,22 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+// include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+
+pub mod context_sanity_check;
+
+pub(crate) mod rum_utils {
+    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+}
+
+pub mod prelude {
+    //
+}
 
 #[cfg(test)]
 mod mlir_tests {
     use super::*;
+    use crate::rum_utils::*;
     use std::ffi::CString;
 
     #[test]

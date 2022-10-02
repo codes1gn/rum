@@ -28,16 +28,29 @@ apt install build-essential,cmake,liblapack-dev,libopenblas-dev,curl,wget,ninja-
 ```
 
 ### Usage
+All MLIR C API are form in rum_utils mod, if you wanna use it, config and add following code snippets in your code
+```
+// Cargo.toml
+rum = "0.1"
+```
+```
+// any mod
+use rum::rum_utils::*;
 ```
 
-```
+### MLIR Manual
+please refer to the official documentation of MLIR: mlir.llvm.org
 
 ### Contributing
+
+### Thanks
+Big thanks to related projects that inspired us
+* The MLIR project: mlir.llvm.org/docs/
+* the rust-bindgen project: github.com/rust-lang/rust-bindgen
+* and mlir-sys project that shows a init demo on how to bind MLIR in rust: github.com/femtomc/mlir-sys
 
 ### License
 This project is licensed under the MIT license
 ### Show your support
 Leave a ⭐ if you like this project
 
-***
-Readme made with 💖 using [README Generator by Dhravya Shah](https://github.com/Dhravya/readme-generator)
