@@ -10,3 +10,7 @@ license-file = "LICENSE"
 
 [build-dependencies]
 bindgen = "0.60.1"
+
+[[bin]]
+name = "basic_end2end"
+path = "examples/basic-e2e/main.rs"
