@@ -9,7 +9,7 @@ readme = "README.md"
 license-file = "LICENSE"
 
 [build-dependencies]
-bindgen = "0.60.1"
+bindgen = "0.64.0"
 
 [[bin]]
 name = "basic_end2end"
