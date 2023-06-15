@@ -21,6 +21,7 @@ fn main() {
 fn run() -> Result<(), Box<dyn Error>> {
     let version = llvm_config("--version")?;
 
+    // sanity check on llvm major version
     if !version.starts_with(&format!("{}.", LLVM_MAJOR_VERSION)) {
         return Err(format!(
             "failed to find correct version ({}.x.x) of llvm-config (found {})",
@@ -29,9 +30,11 @@ fn run() -> Result<(), Box<dyn Error>> {
         .into());
     }
 
+    // define wrapper header and search dir for linked libraries
     println!("cargo:rerun-if-changed=wrapper.h");
     println!("cargo:rustc-link-search={}", llvm_config("--libdir")?);
 
+    // way 1 link by dir: listing, filtering and collecting all satisfied libraries
     for name in fs::read_dir(llvm_config("--libdir")?)?
         .map(|entry| {
             Ok(if let Some(name) = entry?.path().file_name() {
@@ -55,12 +58,14 @@ fn run() -> Result<(), Box<dyn Error>> {
         }
     }
 
+    // way 2 link by name: add --libnames to include above listed libs
     for name in llvm_config("--libnames")?.trim().split(' ') {
         if let Some(name) = trim_library_name(name) {
             println!("cargo:rustc-link-lib={}", name);
         }
     }
 
+    // way 3 link by system-lib
     for flag in llvm_config("--system-libs")?.trim().split(' ') {
         let flag = flag.trim_start_matches("-l");
 
@@ -92,6 +97,7 @@ fn run() -> Result<(), Box<dyn Error>> {
         println!("cargo:rustc-link-lib={}", name);
     }
 
+    // invoke bindgen builder to process wrapper.h and include the hereby dependent headers
     bindgen::builder()
         .header("wrapper.h")
         .clang_arg(format!("-I{}", llvm_config("--includedir")?))
@@ -103,6 +109,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+// determine the system cpp libname
 fn get_system_libcpp() -> Option<&'static str> {
     if cfg!(target_env = "msvc") {
         None
@@ -113,7 +120,9 @@ fn get_system_libcpp() -> Option<&'static str> {
     }
 }
 
+// query info via llvm-config
 fn llvm_config(argument: &str) -> Result<String, Box<dyn Error>> {
+    // query llvm-config with --link-static + query-string
     let prefix = env::var("MLIR_SYS_150_PREFIX")
         .map(|path| Path::new(&path).join("bin"))
         .unwrap_or_default();
@@ -135,6 +144,7 @@ fn llvm_config(argument: &str) -> Result<String, Box<dyn Error>> {
     .to_string())
 }
 
+// trim a <name> in lib<name>.a that is a static library format
 fn trim_library_name(name: &str) -> Option<&str> {
     if let Some(name) = name.strip_prefix("lib") {
         name.strip_suffix(".a")
